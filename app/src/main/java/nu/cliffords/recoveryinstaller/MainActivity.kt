@@ -30,14 +30,23 @@ class MainActivity : Activity() {
             output_text_view.setText(mCurrentText)
             // Check if installation thread has signalled an error..
             if (msg.what > 0) {
+                var errorMessage = ""
+                when (msg.what) {
+                    1 -> { errorMessage = "adb-ec not found on device!"}
+                    else -> {errorMessage = "unknown" }
+                }
                 // ..and if so, show an error dialog..
-                val errorString = StringBuilder().append(String.format("Error: ")).append(msg.what).toString()
+                val errorString = StringBuilder().
+                        append(R.string.error_text).
+                        append(errorMessage).
+                        append( "("+msg.what+")")
+                        .toString()
                 Builder(this@MainActivity).
+                        setTitle(R.string.error_title).
                         setMessage(errorString).
                         setCancelable(false).
                         // ..that provides the user with information and a way to close the application.
                         setNegativeButton(R.string.ok_text, { _, _ ->
-                            Log.i("nu.cliffords.recoveryinstaller","Cancel button pressed..")
                             this@MainActivity.finish()
                 }).create().show()
             }
