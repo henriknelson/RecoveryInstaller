@@ -1,7 +1,14 @@
 #!/system/bin/sh
 
+doLog() {
+    log -t "nu.cliffords.recoveryinstaller" $1
+    echo $1
+}
+
+doLog "nelshhMod custom recovery installer v.1.0"
+
 ADB=/system/bin/adb-ec
-[ ! -f $ADB ] && echo "Application adb-ec does not exist on this device, aborting.." && exit 1
+[ ! -f $ADB ] && doLog "Application adb-ec does not exist on this device, aborting.." && exit 1
 
 setprop sys.hct.wifi adb
 
@@ -12,9 +19,9 @@ $ADB disconnect
 while [ "$($ADB get-state)" != "device" ]; do $ADB connect localhost >/dev/null; done
 echo adbd restarted
 
-echo "Writing recovery to device.."
+doLog "Writing recovery to device.."
 $ADB shell dd if=$(dirname $0)/recovery of=/dev/block/by-name/recovery
 
-echo "nelshhMod custom recovery has been installed!"
-echo "Rebooting to recovery.."
+doLog "nelshhMod custom recovery has been installed!"
+doLog "Rebooting to recovery.."
 $ADB reboot recovery
