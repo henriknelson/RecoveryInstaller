@@ -71,7 +71,7 @@ class MainActivity : Activity() {
             // Update GUI with wait text..
             mShellMessageHandler.sendEmptyMessage(-127)
             // Run shell script
-            val commandResult = Shell.SU.run(mScriptFilePath)
+            val commandResult = Shell.SH.run(mScriptFilePath)
             // Get shell command result
             mCurrentText = commandResult.getStdout()
             // Update GUI with command result

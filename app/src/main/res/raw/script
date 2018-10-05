@@ -1,7 +1,6 @@
 #!/system/bin/sh
 
 ADB=/system/bin/adb-ec
-echo "nelshhMod RecoveryInstaller 1.0"
 [ ! -f $ADB ] && echo "Application adb-ec does not exist on this device, aborting.." && exit 1
 
 setprop sys.hct.wifi adb
