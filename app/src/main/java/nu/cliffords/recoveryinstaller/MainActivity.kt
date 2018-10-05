@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.Window
-import android.app.AlertDialog.Builder;
+import android.app.AlertDialog.Builder
 import android.content.Context
 import java.io.IOException
 import kotlinx.android.synthetic.main.activity_main.*
 import com.jaredrummler.android.shell.Shell.SH
 import android.os.Message
 import android.util.Log
+import com.jaredrummler.android.shell.Shell
 
 class MainActivity : Activity() {
 
@@ -43,6 +44,7 @@ class MainActivity : Activity() {
         }
     }
 
+    // Set up application
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -67,9 +69,9 @@ class MainActivity : Activity() {
             Log.i("nu.cliffords.recoveryinstaller","Starting installation of custom recovery..")
             mCurrentText = getString(R.string.wait_text)
             // Update GUI with wait text..
-            mShellMessageHandler.sendEmptyMessage(-1)
+            mShellMessageHandler.sendEmptyMessage(-127)
             // Run shell script
-            val commandResult = SH.run(mScriptFilePath)
+            val commandResult = Shell.SU.run(mScriptFilePath)
             // Get shell command result
             mCurrentText = commandResult.getStdout()
             // Update GUI with command result
@@ -81,7 +83,7 @@ class MainActivity : Activity() {
     // Writes the given raw resource to the internal disc and returns the path to the resource on disc
     @Throws(IOException::class)
     private fun writeRawResourcesToDisc(rawResourceName: String): String {
-        Log.i("nu.cliffords.recoveryinstaller","Trying to save resource with name: " + rawResourceName)
+        Log.i("nu.cliffords.recoveryinstaller","Trying to write resource with name: " + rawResourceName + " to disc.")
         val rawResource = getResources().openRawResource(getResources().getIdentifier(rawResourceName, "raw", getPackageName()))
         val rawResourceBytes = ByteArray(rawResource.available())
         rawResource.read(rawResourceBytes)
@@ -91,9 +93,9 @@ class MainActivity : Activity() {
         openFileOutput.close()
         val fileStreamPath = getFileStreamPath(rawResourceName)
         fileStreamPath.setExecutable(true)
-        val retStr = fileStreamPath.getPath()
-        Log.i("nu.cliffords.recoveryinstaller","Resource saved at: " + retStr)
-        return retStr
+        val retPath = fileStreamPath.getPath()
+        Log.i("nu.cliffords.recoveryinstaller","Resource " + rawResourceName + " saved at: " + retPath)
+        return retPath
     }
 
 }

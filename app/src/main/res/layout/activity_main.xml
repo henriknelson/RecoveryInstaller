@@ -8,6 +8,7 @@
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
+    android:baselineAligned="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -20,30 +21,32 @@
         <TextView
             android:id="@+id/infoTextView"
             android:textColor="@android:color/black"
-            android:fontFamily="@font/slatebold"
+            android:fontFamily="@font/slatelight"
+            android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:text="@string/info_text"
             android:textAlignment="center"/>
         <Button android:id="@+id/install_button"
             android:background="@drawable/button_selector"
             android:layout_width="@dimen/install_button_width"
             android:layout_height="@dimen/install_button_height"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:text=""
             android:textAllCaps="false"/>
         <ScrollView
             android:background="#0fffffff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="40dp">
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/output_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:textColor="@android:color/white" />
