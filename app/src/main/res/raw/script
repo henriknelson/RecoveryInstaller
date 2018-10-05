@@ -1,0 +1,21 @@
+#!/system/bin/sh
+
+ADB=/system/bin/adb-ec
+
+[ ! -f $ADB ] && exit 1
+
+echo "nelshhMod recovery installer 1.0"
+setprop sys.hct.wifi adb
+
+while [ "$($ADB get-state)" != "device" ]; do $ADB connect localhost; done
+$ADB root
+$ADB disconnect
+
+while [ "$($ADB get-state)" != "device" ]; do $ADB connect localhost >/dev/null; done
+echo adbd restarted
+
+echo "Installing nelshhMod custom recovery.."
+$ADB shell dd if=$(dirname $0)/recovery of=/dev/block/by-name/recovery
+
+echo "Installation finished - rebooting to recovery."
+$ADB reboot recovery
