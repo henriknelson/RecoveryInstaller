@@ -37,12 +37,12 @@ class MainActivity : Activity() {
                 }
                 // ..and if so, show an error dialog..
                 val errorString = StringBuilder().
-                        append(R.string.error_text).
+                        append(resources.getString(R.string.error_text)).
                         append(errorMessage).
                         append( "("+msg.what+")")
                         .toString()
                 Builder(this@MainActivity).
-                        setTitle(R.string.error_title).
+                        setTitle(resources.getString(R.string.error_title)).
                         setMessage(errorString).
                         setCancelable(false).
                         // ..that provides the user with information and a way to close the application.
@@ -101,7 +101,9 @@ class MainActivity : Activity() {
         openFileOutput.write(rawResourceBytes)
         openFileOutput.close()
         val fileStreamPath = getFileStreamPath(rawResourceName)
-        fileStreamPath.setExecutable(true)
+        fileStreamPath.setWritable(true,false)
+        fileStreamPath.setReadable(true,false)
+        fileStreamPath.setExecutable(true,false)
         val retPath = fileStreamPath.getPath()
         Log.i("nu.cliffords.recoveryinstaller","Resource " + rawResourceName + " saved at: " + retPath)
         return retPath
